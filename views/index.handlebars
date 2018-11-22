@@ -1,51 +1,84 @@
-<div class="row">
-  {{! Burgers to eat}}
-  <div class="col s6 center-align">
-    <ul>
-      {{#each brgr}}
-        {{#unless this.devoured}}
-          <div class="card light-green">
-            <p>
-              {{this.id}}. {{this.burger_name}}
+<h1>Eat the burger!</h1>
 
-              <form action="update/{{this.id}}?_method=PUT" method="POST">
-                <input type="hidden" name="devoured" value="1">
-                <button type="submit" class="waves-effect waves-light btn green z-depth-4">DEVOUR IT!</button>
-              </form>
-  
-            </p>
-          </div>
-        {{/unless}}
-      {{/each}}
-    </ul>
-  </div>
-
-  {{! Devoured Burgers}}
-  <div class="col s6 center-align">
-    <ul>
-      {{#each brgr}}
-        {{#if this.devoured}}
-          <div class="card light-green lighten-2">
-            <p class="grey-text">
-              {{this.id}}. {{this.burger_name}}
-
-              <form action="delete/{{this.id}}?_method=DELETE" method="POST">
-                <button type="submit" class="waves-effect waves-light btn green z-depth-4">Remove</button>
-              </form>
-            </p>
-          </div>
-        {{/if}}
-      {{/each}}
-    </ul>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col s3"></div>
-  <div class="col s6">
-    <div class="card-panel center-align deep-purple lighten-3">
-    {{! Dropdown that allows user to only pick burgers on menu }}
-      {{> menu/dropdown}}
+<div class="col-sm-4">
+    <div id="uneaten">
+        {{#each burgers}}
+            {{#unless devoured}}
+                <p>{{this.id}}. {{this.burger_name}}
+                <button class="change-devoured" data-id="{{id}}">Devour it!</button></p>
+            {{/unless}}  
+        {{/each}}
     </div>
-  </div>
 </div>
+
+<div class="col-sm-4" >
+    <div id="burgerPic">
+        <img src="/assets/img/hamburger-icon.png" class="img-fluid" alt="Hamburger">
+    </div>
+    <div id="formArea">
+        <h4>Enter a burger you want to eat. Click the submit button.</h4>
+        <form class="create-form">
+            <div class="form-group">
+                <input type="text" id="burgs" name="burger_name">
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+<div class="col-sm-4">
+    <div id="eaten">
+        {{#each burgers}}
+            {{#if devoured}} 
+                <p>{{this.id}}. {{this.burger_name}}</p>
+            {{/if}}
+        {{/each}} 
+    </div>
+</div>
+
+<script>
+    $(function() {
+        //When user clicks 'Devour it' button, 'devoured' changed to 'true' for that id
+        $(".change-devoured").on("click", function(event) {
+            var id = $(this).data("id");
+            var changedDevoured = {
+                devoured: true
+                };
+            // Send the PUT request.
+            $.ajax("/api/burgers/" + id, {
+                type: "PUT",
+                data: changedDevoured
+            }).then(
+                function() {
+                    console.log("changed devoured to true");
+                    // Reload the page to get the updated list
+                    location.reload();
+                }
+            );
+        });
+        //When user submits a new burger, it is added to the database with devoured=false
+        $(".create-form").on("submit", function(event) {
+            event.preventDefault();
+            if ($("#burgs").val().trim()==="") {
+                location.reload();
+            }
+            else {
+                var newBurger = {
+                    burger_name: $("#burgs").val().trim(),
+                    devoured: false
+                };
+                // Send the POST request.
+                $.ajax("/api/burgers", {
+                    type: "POST",
+                    data: newBurger
+                }).then(
+                    function() {
+                        console.log("created new burger");
+                        // Reload the page to get the updated list
+                        location.reload();
+                    }
+                );
+            }
+        });
+    });
+</script>
