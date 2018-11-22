@@ -3,7 +3,7 @@ var express = require("express");
 
 var router = express.Router();
 //import burger.js functions
-var burger = require("../models/burger.js");
+var burger = require("../models/burgers.js");
 
 //Main page loads the data in the burgers table
 router.get("/", function(req, res) {
