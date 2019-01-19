@@ -14,6 +14,13 @@ router.get("/", function(req, res) {
       res.render("index", hbsObject);
     });
   });
+
+//Add a new burger 
+router.post("/api/burgers/create", function (req, res) {
+    burger.insertOne(req.body.burger_name, function() {
+        res.redirect("/index");
+    });
+});
   
 //PUT route updates the 'devoured' column to 'true'
 router.put("/api/burgers/:id", function(req, res) {
@@ -35,9 +42,9 @@ console.log("condition", condition);
 //POST route takes the user's inputted burger and adds it to the 'burgers' table
 router.post("/api/burgers", function(req, res) {
     burger.create([
-        "burger_name", "devoured"
+        "burger_name"
     ], [
-        req.body.burger_name, req.body.devoured
+        req.body.burger_name
     ], function(result) {
         // Send back the ID of the new quote
         res.json({ id: result.insertId });
