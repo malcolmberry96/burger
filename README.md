@@ -12,7 +12,8 @@ Technologies Used:
 - CSS/HTML 
 
 
+<img width="1087" alt="screen shot 2019-01-23 at 10 30 27 am" src="https://user-images.githubusercontent.com/39191969/51623400-3d457780-1efe-11e9-8873-2b5f5561b110.png">
+
 <img width="1089" alt="screen shot 2019-01-23 at 10 30 47 am" src="https://user-images.githubusercontent.com/39191969/51623384-31f24c00-1efe-11e9-868e-394e2491a306.png">
 
-<img width="1087" alt="screen shot 2019-01-23 at 10 30 27 am" src="https://user-images.githubusercontent.com/39191969/51623400-3d457780-1efe-11e9-8873-2b5f5561b110.png">
 
