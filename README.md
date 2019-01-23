@@ -1,4 +1,4 @@
-# Burger
+# MySQL Burger
 
 Application built with the sole purpose for me to practice creating MySQL databases and connecting it to applications. To use this app type in the type of burger you would like to eat, click submit, and it will populate on the left hand side of the screen. To devour it, click "devour it" and the burger will move to the right side to indicate that it has been devoured. 
 
